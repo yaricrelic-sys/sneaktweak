@@ -1,0 +1,27 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="Apache-2.0"
+
+[[mods]]
+modId="sneaktweak"
+version="1.10.2-forge"
+displayName="Sneak Tweak"
+description='''
+Tweaks the sneak animation.
+Ported to Forge 1.20.1 from Fabric.
+'''
+authors="Lortseam"
+
+[[dependencies.sneaktweak]]
+modId="forge"
+mandatory=true
+versionRange="[47,)"
+ordering="NONE"
+side="CLIENT"
+
+[[dependencies.sneaktweak]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1,1.21)"
+ordering="NONE"
+side="CLIENT"
