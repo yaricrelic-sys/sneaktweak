@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "sneaktweak.refmap.json",
   "client": [
+    "CameraMixin",
     "ClientPlayNetworkHandlerMixin",
     "ClientPlayerEntityMixin"
   ],
