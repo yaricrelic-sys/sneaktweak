@@ -5,27 +5,20 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:6.0.+'
-        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '6.0.+', changing: true
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.spongepowered.mixin'
 
-version = '1.10.1'
-group = 'me.lortseam'
-archivesBaseName = 'sneaktweak'
+version = project.mod_version
+group = project.maven_group
+archivesBaseName = project.archives_base_name
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
     mappings channel: 'official', version: '1.20.1'
-}
-
-mixin {
-    add sourceSets.main, 'sneaktweak.refmap.json'
-    config 'sneaktweak.mixins.json'
 }
 
 repositories {
@@ -34,27 +27,30 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.20.1-47.2.0'
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    minecraft "net.minecraftforge:forge:1.20.1-47.2.0"
 }
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
+// ВАЖНО: явно указываем стратегию для дубликатов
+tasks.named('processResources', ProcessResources).configure {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
 jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
     manifest {
         attributes([
-            'Specification-Title'   : 'sneaktweak',
-            'Specification-Vendor'  : 'Lortseam',
-            'Specification-Version' : '1',
-            'Implementation-Title'  : project.name,
-            'Implementation-Version': project.version,
-            'Implementation-Vendor' : 'Lortseam',
-            'MixinConfigs'          : 'sneaktweak.mixins.json'
+            'Specification-Title'    : 'sneaktweak',
+            'Specification-Vendor'   : 'Lortseam',
+            'Specification-Version'  : '1',
+            'Implementation-Title'   : project.name,
+            'Implementation-Version' : project.version,
+            'Implementation-Vendor'  : 'Lortseam',
+            'MixinConfigs'           : 'sneaktweak.mixins.json'
         ])
-    }
-    from('src/main/resources') {
-        include '**/*'
     }
 }
