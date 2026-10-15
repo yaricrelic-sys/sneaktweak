@@ -17,10 +17,10 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayer {
     }
 
     @Override
-    public float getEyeHeight(Pose pose, EntityDimensions dimensions) {
-        float height = super.getEyeHeight(pose, dimensions);
+    protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
+        float height = super.getStandingEyeHeight(pose, dimensions);
 
-        if (pose == Pose.CROUCHING && canChangeIntoPose(Pose.STANDING)) {
+        if (pose == Pose.CROUCHING && canPlayerFitWithinBlocksAndEntitiesWhen(Pose.STANDING)) {
             height = ModConfig.modifySneakingEyeHeight(height);
         }
         return height;
